@@ -1,5 +1,9 @@
 import Vue from 'vue';
 import VueRouter from "vue-router";
+import VueSidebarMenu from 'vue-sidebar-menu'
+import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
+
+Vue.use(VueSidebarMenu)
 
 Vue.use(VueRouter)
 
@@ -23,7 +27,6 @@ const route = new VueRouter({
             path: '/users/personal', component: () => import('./components/User/Personal'),
             name: 'user.personal'
         },
-
         {
             path: '*', component: () => import('./components/User/Registration'),
             name: 'No Page'

@@ -28,6 +28,14 @@ const route = new VueRouter({
             name: 'user.personal'
         },
         {
+            path: '/home', component: () => import('./components/Home'),
+            name: 'page.home'
+        },
+        {
+            path: '/bloc', component: () => import('./components/bloc'),
+            name: 'page.bloc'
+        },
+        {
             path: '*', component: () => import('./components/User/Registration'),
             name: 'No Page'
         }
@@ -44,7 +52,7 @@ route.beforeEach((to, from, next) => {
             return next()
         } else {
             return next({
-                name: 'user.login'
+                name: 'page.home'
             })
         }
     }

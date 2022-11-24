@@ -19,25 +19,25 @@
             <ul>
                 <li class="nav-item active">
                     <i class="bx bxs-dashboard"></i>
-                    <span>{{ Главная }}</span>
+                    <span><a href="../Home.vue"></a> Главная </span>
                 </li>
                 <li class="nav-item">
                     <i class="bx bxs-bar-chart-alt-2"></i>
-                    <span>Личный кабинет</span>
+                    <span><router-link v-if="accessToken" :to="{ name: 'user.personal'}"></router-link>Личный кабинет</span>
                 </li>
 
                 <li class="nav-item">
                     <i class="bx bxs-wallet"></i>
-                    <span >{name: user.login}</span>
+                    <span style="color:white"><router-link v-if="!accessToken" :to="{ name: 'user.login'}">Вход</router-link></span>
                 </li>
 
                 <li class="nav-item">
                     <i class="bx bxs-bell"></i>
-                    <span>Регистрация</span>
+                    <span><router-link v-if="!accessToken" :to="{ name: 'user.registration'}">Регистрация</router-link></span>
                 </li>
                 <li class="nav-item">
                     <i class="bx bxs-cog"></i>
-                    <span> Выход</span>
+                    <span><router-link v-if="accessToken" href="#" :to="logout"></router-link>Выход</span>
                 </li>
             </ul>
             </div>
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import api from "../../api";
 export default {
     name: "PageHome",
     data() {
@@ -63,6 +64,15 @@ export default {
             accessToken: null
         }
     },
+    methods: {
+        logout() {
+            api.post('/api/auth/logout')
+                .then(res => {
+                    localStorage.removeItem('access_token');
+                    this.$router.push({name: 'user.login'})
+                })
+        }
+    }
 }
 
 </script>
@@ -76,6 +86,14 @@ export default {
     outline: 0;
     list-style: none;
     box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background-image: url('../images/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
 }
 
 .sidebar {
@@ -176,7 +194,7 @@ export default {
     justify-content: flex-start;
     border-radius: 4px;
     width: 100%;
-    height: 56px;
+    height: 46px;
     padding: 0 16px;
     margin: 8px 0;
     color: #fff;

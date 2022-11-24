@@ -1,13 +1,8 @@
 <template>
 <div>
-    <div class="w-auto">
-            <router-link :to="{ name: 'fruit.index'}">dfgfgd</router-link>
-            <router-link v-if="!accessToken" :to="{ name: 'user.login'}">lllll</router-link>
-            <router-link v-if="!accessToken" :to="{ name: 'user.registration'}">jjjjj</router-link>
-            <router-link v-if="accessToken" :to="{ name: 'user.personal'}">jjjjjhjgj</router-link>
-            <a v-if="accessToken" href="#" @click.prevent="logout">log</a>
-    </div>
+    <router-link :to="{ name: 'fruit.index'}"></router-link>
     <sidebar></sidebar>
+    <home></home>
     <router-view class="w-25"></router-view>
     </div>
 </template>
@@ -15,8 +10,9 @@
 <script>
 import sidebar from "./sidebar/sidebar";
 import api from "../api";
+import Home from "./Home";
 export default {
-    components:{ sidebar },
+    components:{Home, sidebar },
     name: "Index",
     data() {
         return {
@@ -50,10 +46,6 @@ export default {
     position: absolute;
     top: 30%;
     right: 650px
-}
-
-.w-auto {
-    margin: auto;
 }
 
 </style>

@@ -29,11 +29,7 @@ const route = new VueRouter({
         },
         {
             path: '/home', component: () => import('./components/Home'),
-            name: 'page.home'
-        },
-        {
-            path: '/bloc', component: () => import('./components/bloc'),
-            name: 'page.bloc'
+            name: 'home'
         },
         {
             path: '*', component: () => import('./components/User/Registration'),
@@ -48,11 +44,11 @@ route.beforeEach((to, from, next) => {
     const accessToken = localStorage.getItem('access_token')
 
     if (!accessToken) {
-        if (to.name === 'user.login' || to.name === 'user.registration') {
+        if (to.name === 'home' || to.name === 'user.login' || to.name === 'user.registration') {
             return next()
         } else {
             return next({
-                name: 'page.home'
+                name: 'home'
             })
         }
     }

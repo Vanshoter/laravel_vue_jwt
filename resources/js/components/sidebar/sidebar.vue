@@ -19,25 +19,21 @@
             <ul>
                 <li class="nav-item active">
                     <i class="bx bxs-dashboard"></i>
-                    <span><a href="../Home.vue"></a> Главная </span>
-                </li>
-                <li class="nav-item">
-                    <i class="bx bxs-bar-chart-alt-2"></i>
-                    <span><router-link v-if="accessToken" :to="{ name: 'user.personal'}"></router-link>Личный кабинет</span>
+                    <span><router-link class="nav-link" v-if="!accessToken" :to="{ name: '/home'}">Главная</router-link></span>
                 </li>
 
                 <li class="nav-item">
                     <i class="bx bxs-wallet"></i>
-                    <span style="color:white"><router-link v-if="!accessToken" :to="{ name: 'user.login'}">Вход</router-link></span>
+                    <span><router-link class="nav-link" v-if="!accessToken" :to="{ name: 'user.login'}">Вход</router-link></span>
                 </li>
 
                 <li class="nav-item">
                     <i class="bx bxs-bell"></i>
-                    <span><router-link v-if="!accessToken" :to="{ name: 'user.registration'}">Регистрация</router-link></span>
+                    <span><router-link class="nav-link" v-if="!accessToken" :to="{ name: 'user.registration'}">Регистрация</router-link></span>
                 </li>
                 <li class="nav-item">
                     <i class="bx bxs-cog"></i>
-                    <span><router-link v-if="accessToken" href="#" :to="logout"></router-link>Выход</span>
+                    <span><router-link class="nav-link" v-if="!accessToken" href="#" :to="logout">Выход</router-link></span>
                 </li>
             </ul>
             </div>
@@ -57,14 +53,24 @@
 
 <script>
 import api from "../../api";
+
 export default {
-    name: "PageHome",
+    name: "sidebar",
     data() {
         return {
             accessToken: null
         }
     },
+    mounted() {
+        this.getAccessToken()
+    },
+    updated() {
+        this.getAccessToken()
+    },
     methods: {
+        getAccessToken() {
+            this.accessToken = localStorage.getItem('access_token')
+        },
         logout() {
             api.post('/api/auth/logout')
                 .then(res => {
